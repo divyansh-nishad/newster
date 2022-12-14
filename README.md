@@ -22,4 +22,6 @@ In terms of technical implementation, the app makes use of API provided by newsA
 ## App demonstration video
 
 
-
+<video width="320" height="240" controls>
+  <source src="/lib/assets/05.mp4" type="video/mp4">
+</video>
