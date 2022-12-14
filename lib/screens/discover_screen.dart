@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:newster/screens/article_screen.dart';
+import 'package:newster/services/api_service.dart';
 import 'package:newster/widgets/image_container.dart';
 
 import '../models/article_model.dart';
@@ -37,16 +40,19 @@ class DiscoverScreen extends StatelessWidget {
 }
 
 class _CategoryNews extends StatelessWidget {
-  const _CategoryNews({
+  _CategoryNews({
     Key? key,
     required this.tabs,
   }) : super(key: key);
 
   final List<String> tabs;
+  ApiService client = ApiService();
 
   @override
   Widget build(BuildContext context) {
-    final articles = Article.articles;
+    Future<List<dynamic>> article = client.getArticle();
+    final List<Article> news = jsonDecode(article.toString());
+    // final articles = Article.articles;
     return Column(
       children: [
         TabBar(
@@ -74,14 +80,14 @@ class _CategoryNews extends StatelessWidget {
             children: tabs
                 .map((e) => ListView.builder(
                       shrinkWrap: true,
-                      itemCount: articles.length,
+                      itemCount: news.length,
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
                             Navigator.pushNamed(
                               context,
                               ArticleScreen.routeName,
-                              arguments: articles[index],
+                              arguments: news[index],
                             );
                           },
                           child: Row(
@@ -93,7 +99,7 @@ class _CategoryNews extends StatelessWidget {
                                   height: 80,
                                   margin: const EdgeInsets.all(10),
                                   borderRadius: 5,
-                                  imageUrl: articles[index].imageUrl,
+                                  imageUrl: news[index].imageUrl,
                                 ),
                               ),
                               const SizedBox(width: 10),
@@ -103,7 +109,7 @@ class _CategoryNews extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      articles[index].title,
+                                      news[index].title,
                                       maxLines: 2,
                                       overflow: TextOverflow.clip,
                                       style: Theme.of(context)
@@ -122,7 +128,7 @@ class _CategoryNews extends StatelessWidget {
                                         ),
                                         const SizedBox(width: 5),
                                         Text(
-                                          '${DateTime.now().difference(articles[index].createdAt).inHours} hours ago',
+                                          '${news[index].createdAt} ago',
                                           style: const TextStyle(fontSize: 12),
                                         ),
                                         const SizedBox(width: 20),
@@ -132,7 +138,7 @@ class _CategoryNews extends StatelessWidget {
                                         ),
                                         const SizedBox(width: 5),
                                         Text(
-                                          '${articles[index].views} views',
+                                          news[index].author.toString(),
                                           style: const TextStyle(fontSize: 12),
                                         ),
                                       ],

@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import '../models/article_model.dart';
+import '../services/api_service.dart';
 class ImageContainer extends StatelessWidget {
-  const ImageContainer({
+   ImageContainer({
     Key? key,
     this.height = 125,
     this.borderRadius = 20,
@@ -20,9 +23,13 @@ class ImageContainer extends StatelessWidget {
   final EdgeInsets? margin;
   final double borderRadius;
   final Widget? child;
+  ApiService client = ApiService();
 
   @override
   Widget build(BuildContext context) {
+    Future<List<dynamic>> article = client.getArticle();
+    final List<Article> news = jsonDecode(article.toString());
+
     return Container(
       height: height,
       width: width,
@@ -30,7 +37,7 @@ class ImageContainer extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         image: DecorationImage(
-          image: NetworkImage(Article.articles[0].imageUrl),
+          image: NetworkImage(news[0].imageUrl),
           fit: BoxFit.cover,
         ),
       ),

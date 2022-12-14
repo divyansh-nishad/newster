@@ -2,17 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:newster/models/article_model.dart';
 import 'package:newster/screens/article_screen.dart';
 import 'package:newster/widgets/custom_tag.dart';
+import 'dart:convert';
 
+import '../services/api_service.dart';
 import '../widgets/bottom_nav_bar.dart';
 import '../widgets/image_container.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
 
+  ApiService client = ApiService();
   static const routeName = '/';
   @override
   Widget build(BuildContext context) {
-    Article article = Article.articles[0];
+    Future<List<dynamic>> article = client.getArticle();
+    final List<Article> news = jsonDecode(article.toString());
+    // print(article);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -30,8 +35,8 @@ class HomeScreen extends StatelessWidget {
         body: ListView(
           padding: EdgeInsets.zero,
           children: [
-            _NewsOfTheDay(article: article),
-            _BreakingNews(articles: Article.articles)
+            _NewsOfTheDay(article: news[0]),
+            _BreakingNews(articles: news)
           ],
         ));
   }
@@ -102,7 +107,7 @@ class _BreakingNews extends StatelessWidget {
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            '${DateTime.now().difference(articles[index].createdAt).inHours} hours ago',
+                            articles[index].createdAt,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                           const SizedBox(height: 5),
@@ -136,7 +141,7 @@ class _NewsOfTheDay extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.45,
         width: double.infinity,
         padding: EdgeInsets.all(20),
-        imageUrl: Article.articles[0].imageUrl,
+        imageUrl: article.imageUrl,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,

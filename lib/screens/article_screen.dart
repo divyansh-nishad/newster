@@ -62,7 +62,7 @@ class ArticleScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              '${DateTime.now().difference(article.createdAt).inHours} h',
+                              article.createdAt.toString(),
                               style: Theme.of(context).textTheme.bodyMedium!,
                             )
                           ]),
@@ -76,7 +76,7 @@ class ArticleScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              article.views,
+                              article.source.toString(),
                               style: Theme.of(context).textTheme.bodyMedium!,
                             )
                           ]),
@@ -132,7 +132,7 @@ class _NewsHeadline extends StatelessWidget {
           ),
           CustomTag(backgroundColor: Colors.grey.withAlpha(150), children: [
             Text(
-              article.category,
+              article.author,
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium!
