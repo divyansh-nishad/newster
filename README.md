@@ -1,16 +1,17 @@
-# newster
 
-A new Flutter project.
+# Newster
 
-## Getting Started
+Newster is a mobile application built using flutter that allows users to browse and view the latest news articles from various sources. The app has a clean and user-friendly interface that makes it easy for users to navigate and find the news they are interested in.
 
-This project is a starting point for a Flutter application.
+In terms of technical implementation, the app makes use of API provided by newsAPI.org to fetch the latest news articles and display them in the app. The app also uses flutter's built-in UI components and design tools to create the app's user interface.
+## Screenshots
 
-A few resources to get you started if this is your first Flutter project:
+![App Screenshot](/lib/assets/01.jpg)
+![App Screenshot](/lib/assets/02.jpg)
+![App Screenshot](/lib/assets/03.jpg)
+![App Screenshot](/lib/assets/04.jpg)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## App demonstration video
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
